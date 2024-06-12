@@ -1,0 +1,175 @@
+.mb-4{
+    position: absolute;
+    right: 1.3%;
+    top: 16%;
+    width:70.3%;
+    padding-right:0.2vw;
+    padding-left:0.2vw;
+    background-color: #fff;
+}
+h4{
+    margin-top:1vh;
+}
+.wordCloud{
+    border:1px solid #050505;
+}
+.btn {
+    position: absolute;
+    top: 0%;
+    right: 0.1%;
+    color: rgb(5, 5, 5);
+    background-color: #fff;
+    font-size: 1vw;
+    cursor: pointer;
+    text-decoration: None;
+    border: 0.1vw solid rgb(7, 7, 7);
+    padding: 0.3vh 0.7vw;
+    border-radius: 0.3vw;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.btn:hover {
+    background-color: #040404;
+    color: #fefefe;
+}
+
+.scroll_window {
+    position: absolute;
+    top: 16%;
+    width: 25%;
+    height: 77%; 
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* style all forms */
+.upload form, .form-container form, .container-node form, .container-edge form {
+    position: relative;
+    width: 80%;
+    left: 5%;
+    padding: 1vh;
+    margin-bottom: 3vh;
+    border-radius: 0.5vw;
+    border:none;
+    background-color: #fff;
+    text-align: center;
+    box-shadow:0 0 4px 0 rgba(0,0,0,0.14),0 3px 3px -2px rgba(0,0,0,0.12),0 1px 8px 0 rgba(0,0,0,0.2);
+}
+
+  
+/* Style the submit button */
+.upload-btn,
+.upload input[type="submit"],
+.form-container button[type="submit"],
+.container-node button[type="submit"],
+.container-edge button[type="submit"] {
+
+    color: rgb(5, 5, 5);
+    background-color: #fff;
+    font-size: 1vw;
+    cursor: pointer;
+    text-decoration: None;
+    border: 0.1vw solid rgb(7, 7, 7);
+    padding: 0.3vh 0.7vw;
+    border-radius: 0.3vw;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.upload-btn:hover,
+.upload input[type="submit"]:hover,
+.form-container button[type="submit"]:hover,
+.container-node button[type="submit"]:hover,
+.container-edge button[type="submit"]:hover {
+    background-color: #040404;
+    color: #fefefe;
+}
+
+/* For all the heading*/
+.scroll_window h4 {
+    font-size: 1.15vw;
+    margin-bottom: 10px;
+    color: #474242; 
+}
+
+.upload input[type="file"] {
+    position: relative;
+    margin-bottom: 2vh;
+    font-size: 1vw;
+}
+
+.file-options, .visualization-options {
+    display: flex;
+    flex-wrap: wrap;
+}
+.file-option, .visualization-option {
+    flex: 0 0 33%; 
+    margin-bottom: 0.5vh;
+    display: flex; 
+}
+.file-option input[type="radio"], .visualization-option input[type="radio"] {
+    margin-bottom: 0.7vh;
+    width: 2.5vw;
+    height: 2.5vh;
+}
+/* Apply red color to the label when the radio button is checked */
+.file-option input[type="radio"]:checked,
+.visualization-option input[type="radio"]:checked {
+    /* border-color: red; */
+    accent-color: #0056b3;
+}
+
+.visualization-options label, .file-option label {
+    margin: 0; 
+    font-size: 1.1vw;
+    margin-right: 0.5vw;
+    display: inline-block;
+}
+
+/* 3rd & 4th form */
+
+.container-node button[type="button"],
+.container-edge button[type="button"] {
+
+    color: rgb(5, 5, 5);
+    background-color: #fff;
+    font-size: 1vw;
+    cursor: pointer;
+    text-decoration: None;
+    border: 0.1vw solid rgb(7, 7, 7);
+    padding: 0.3vh 0.7vw;
+    margin-bottom: 0.5vh;
+    border-radius: 0.3vw;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.container-node button[type="button"]:hover,
+.container-edge button[type="button"]:hover {
+    background-color: #040404;
+    color: #fefefe;
+}
+
+.edge-field-wrapper label, .color-field-wrapper label {
+    font-size: 1vw;
+}
+
+.node-dropdown,
+.edge-from-dropdown, .edge-to-dropdown{
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1vw;
+  margin-bottom: 1vh; 
+}
+
+.color-picker,
+.edge-color-picker {
+  width: 4vw; 
+  height: 3vh; 
+  margin-bottom: 1vh; 
+}
+#node-pairs, #selected-pairs {
+    display: flex;
+    flex-wrap: wrap;
+}
+#node-pairs > div, #selected-pairs > div {
+    /* position: relative; */
+    margin-right: 0.1vw;
+    margin-bottom: 0.1vw;
+    font-size: 1vw;
+}

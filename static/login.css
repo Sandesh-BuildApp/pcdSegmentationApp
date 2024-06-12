@@ -1,0 +1,110 @@
+/* Add more attractive styles and animations for login page */
+
+.clsFirstImg{
+    position:  absolute;
+    width:  20vw;
+    top: 1vh;
+    left: 1vw;
+    background-color: transparent;
+}
+
+
+.firstHalf {
+    position: absolute;
+    width: 30vw;
+    top: 40vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+    flex: 1;
+    padding: 1vw;
+    background-color: #caeef1;
+    box-shadow: 0 0 0.5vw rgba(0, 0, 0, 0.1);
+    border-radius: 0.5vw;
+    text-align: center;
+    box-shadow: 0 4px 8px 4px rgba(0, 0, 0, 0.1); 
+    display:table;/* shrinks to fit content */
+    margin:auto;
+}
+h1, h2 {
+    color: #333;
+    font-size: 1.5vw;
+}
+
+.flash-messages {
+    margin-top: 0.3vh;
+}
+.flash-message {
+    padding: 0.5vw;
+    background-color: #f8d7da;
+    color: #721c24;
+    border-radius: 5px;
+    margin-bottom: 0.3vw;
+}
+form {
+    margin-top: 1vh;
+}
+  
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+input[type="text"], 
+input[type="password"] {
+    width: 70%;
+    padding: 0.8vw;
+    /* margin: 0; */
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    border-color: #333;
+}
+button[type="submit"] {
+    padding: 0.5vw 1.2vw;
+    margin-bottom: 1vh;
+    background-color: #0056b3;
+    color: #fff;
+    border: none;
+    border-radius: 0.25vw;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-sizing: border-box;
+}  
+button[type="submit"]:hover {
+    background-color: #007bff;
+}
+
+.links {
+    position: relative;
+    left: 12.5%;
+    width: 75%;
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    
+}
+.forgotPassword {
+    color: rgb(246, 19, 38);
+    font-size: 1.3vw;
+    font-weight: bold;
+    text-decoration: None;
+}
+.signup {
+    color: rgb(3, 3, 3);
+    font-size: 1.3vw;
+    font-weight: bold;
+    text-decoration: None;
+}
+.logi {
+    color: rgb(16, 15, 16);
+    font-size: 1vw;
+    font-weight: bold;
+    text-decoration: None;
+}
+
+
+p {
+    color: red;
+    font-weight: bold;
+}
+
+
