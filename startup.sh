@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Update and install dependencies
-apt-get update && apt-get install -y libx11-6
+apt-get update && apt-get install -y libgl1-mesa-glx
 
 # Install any additional dependencies your application needs
 # For example, you might need to install OpenCV dependencies
