@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    
+    <title>Floorplan Generation</title>
+    <meta name="csrf-param" content="authenticity_token" />
+    <meta name="csrf-token" content="pbADAIFHY22EJKigu3p+1ekX6dXX3MyXj9922nN2QJrJv6G4tHtF5YozPG8BSRxI32iJlKLJpqIWCWraCvoeQQ==" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='common.css') }}">  
+    <link rel="stylesheet" href="{{ url_for('static', filename='keyManage.css') }}"> 
+
+  </head>
+
+  <body style="background-color:#caeef1">
+  <!-- <body style="background-color:#f7f8f8"></body> -->
+  <header>
+    <div class='header'>
+      <div class="header-top">
+        <a class="header-logo"><img src="{{ url_for('static', filename='nohara_logo.png') }}" alt="Company LOGO" ></a>
+      </div>
+      <a href="/logout" class="logout">ログアウト</a>
+
+      <div class="header-nav-container">
+
+        <div class="nav-arrows">  
+            <button class="arrow left">&lsaquo;&lsaquo;&lsaquo;</button>
+        </div>
+        <ul class='header-nav header-navbar'>
+
+            <li class='header-nav-item'>
+            <a class="header-nav-link" href="/keyManage">Key Management Tree Diagram</a>
+            </li>
+
+            <li class='header-nav-item'>
+                <a class="header-nav-link">|</a>
+            </li>
+
+            <li class='header-nav-item'>
+            <a class="header-nav-link" href="/pointCloud">PointCloud Analysis</a>
+            </li>
+
+            <li class='header-nav-item'>
+                <a class="header-nav-link">|</a>
+            </li>
+
+            <li class='header-nav-item'>
+                <a class="header-nav-link" href="/floorGAN">Floorplan Layout</a>
+            </li>
+
+            <li class='header-nav-item'>
+                <a class="header-nav-link">|</a>
+            </li>
+
+            <li class='header-nav-item'>
+                <a class="header-nav-link" >SD Drawing Analysis</a>
+            </li>
+
+            <li class='header-nav-item'>
+                <a class="header-nav-link">|</a>
+            </li>
+
+            <li class='header-nav-item'>
+                <a class="header-nav-link" >Elevation Drawing Analysis</a>
+            </li>
+
+            <li class='header-nav-item'>
+                <a class="header-nav-link">|</a>
+            </li>
+
+            <li class='header-nav-item'>
+                <a class="header-nav-link" >Recommendation</a>
+            </li>
+
+            <li class='header-nav-item'>
+                <a class="header-nav-link">|</a>
+            </li>
+
+            <li class='header-nav-item'>
+                <a class="header-nav-link" >Building material identification</a>
+            </li>
+
+            <li class='header-nav-item'>
+                <a class="header-nav-link">|</a>
+            </li>
+
+            <li class='header-nav-item'>
+                <a class="header-nav-link" >Building material identification</a>
+            </li>
+
+            <li class='header-nav-item'>
+                <a class="header-nav-link">|</a>
+            </li>
+
+            
+
+        </ul>
+        <div class="nav-arrows">  
+            <button class="arrow right">&rsaquo;&rsaquo;&rsaquo;</button>  
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <div class="main-contents">
+    <main class='main'>
+      <div id="app" class='container-fluid' v-cloak>
+
+        <card class='mb-4'>
+            <h5 id='word_cloud'>HouseGAN & archiGAN COMING SOON......
+            </h5>
+           
+        </card>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            setupResultView();
+        })
+      </script>
+    </main>
+  </div>
+
+  <h1> Coming Soon....</h1>
+
+  <!-- <div class="scroll_window">
+
+    <div class="upload-container">
+        <div  class="upload">
+            <form action = "/keyManage" id="upload_form" enctype="multipart/form-data" method="post">
+                <h4>1.ファイルをアップロード</h4>
+                <input type="file" name="file" id="file"><br>
+                <input type="submit" value="アップロード" ><br>
+            </form>
+        </div>
+    </div>
+
+
+    
+    </div> -->
+
+    
+
+    </body>
+
+    <!-- JavaScript code to dynamically add color fields -->
+    <script>
+
+        const navContainer = document.querySelector('.header-nav-container');
+        const nav = document.querySelector('.header-nav');
+        const leftArrow = document.querySelector('.arrow.left');
+        const rightArrow = document.querySelector('.arrow.right');
+
+        let scrollLeft = 0;  // Track current scroll position
+
+        const scrollNav = (direction) => {
+        const scrollAmount = nav.scrollWidth / 3;  // Scroll by a portion of the width
+
+        if (direction === 'left') {
+            scrollLeft -= scrollAmount;
+            if (scrollLeft < 0) {
+            scrollLeft = 0;  // Prevent scrolling beyond left edge
+            leftArrow.classList.add('disabled');  // Disable left arrow if at left end
+            } else {
+            rightArrow.classList.remove('disabled');  // Enable right arrow if scrolled
+            }
+        } else {
+            scrollLeft += scrollAmount;
+            if (scrollLeft + nav.clientWidth >= nav.scrollWidth) {
+            scrollLeft = nav.scrollWidth - nav.clientWidth;  // Prevent scrolling beyond right edge
+            rightArrow.classList.add('disabled');  // Disable right arrow if at right end
+            } else {
+            leftArrow.classList.remove('disabled');  // Enable left arrow if scrolled
+            }
+        }
+        nav.scrollLeft = scrollLeft;  // Update scroll position
+        };
+
+        leftArrow.addEventListener('click', () => scrollNav('left'));
+        rightArrow.addEventListener('click', () => scrollNav('right'));
+        
+
+    </script>
+
+</div>
+
+
+
+
+
+  <!-- <footer class="footer container-fluid">
+  <small class="copyright">© 2007-2024 User Local,Inc. All Rights Reserved.</small>
+  </footer> -->
+
+    
+</html>

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    
+    <title>Point Cloud Analysis</title>
+    <meta name="csrf-param" content="authenticity_token" />
+    <meta name="csrf-token" content="pbADAIFHY22EJKigu3p+1ekX6dXX3MyXj9922nN2QJrJv6G4tHtF5YozPG8BSRxI32iJlKLJpqIWCWraCvoeQQ==" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='common.css') }}"> 
+    <link rel="stylesheet" href="{{ url_for('static', filename='pointCloud.css') }}"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="{{ url_for('static', filename='OrbitControls.js') }}"></script>
+
+  </head>
+
+  <body style="background-color:#caeef1">
+  <!-- <body style="background-color:#f7f8f8"></body> -->
+  <header>
+    <div class='header'>
+      <div class="header-top">
+        <a class="header-logo"><img src="{{ url_for('static', filename='nohara_logo.png') }}" alt="Company LOGO" ></a>
+      </div>
+      <a href="/logout" class="logout">ログアウト</a>
+
+      <div class="header-nav-container">
+
+        <div class="nav-arrows">  
+            <button class="arrow left">&lsaquo;&lsaquo;&lsaquo;</button>
+        </div>
+        <ul class='header-nav header-navbar'>
+
+            <li class='header-nav-item'>
+            <a class="header-nav-link" href="/keyManage">Key Management Tree Diagram</a>
+            </li>
+
+            <li class='header-nav-item'>
+                <a class="header-nav-link">|</a>
+            </li>
+
+            <li class='header-nav-item'>
+            <a class="header-nav-link" href="/pointCloud">PointCloud Analysis</a>
+            </li>
+
+            <li class='header-nav-item'>
+                <a class="header-nav-link">|</a>
+            </li>
+
+            <li class='header-nav-item'>
+                <a class="header-nav-link" href="/floorGAN">Floorplan Layout</a>
+            </li>
+
+            <li class='header-nav-item'>
+                <a class="header-nav-link">|</a>
+            </li>
+
+            <li class='header-nav-item'>
+                <a class="header-nav-link" >SD Drawing Analysis</a>
+            </li>
+
+            <li class='header-nav-item'>
+                <a class="header-nav-link">|</a>
+            </li>
+
+            <li class='header-nav-item'>
+                <a class="header-nav-link" >Elevation Drawing Analysis</a>
+            </li>
+
+            <li class='header-nav-item'>
+                <a class="header-nav-link">|</a>
+            </li>
+
+            <li class='header-nav-item'>
+                <a class="header-nav-link" >Recommendation</a>
+            </li>
+
+            <li class='header-nav-item'>
+                <a class="header-nav-link">|</a>
+            </li>
+
+            <li class='header-nav-item'>
+                <a class="header-nav-link" >Building material identification</a>
+            </li>
+
+            <li class='header-nav-item'>
+                <a class="header-nav-link">|</a>
+            </li>
+
+            <li class='header-nav-item'>
+                <a class="header-nav-link" >Building material identification</a>
+            </li>
+
+            <li class='header-nav-item'>
+                <a class="header-nav-link">|</a>
+            </li>
+
+            
+
+        </ul>
+        <div class="nav-arrows">  
+            <button class="arrow right">&rsaquo;&rsaquo;&rsaquo;</button>  
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <div class="main-contents">
+    <main class='main'>
+      <div id="app" class='container-fluid' v-cloak>
+
+    </main>
+  </div>
+
+
+    <div class="scroll_window">
+
+        <div class="upload-container">
+            <div class="upload">
+                <form action="/pointCloud" id="upload_form" enctype="multipart/form-data" method="post">
+                    <h4>1.ファイルをアップロード</h4>
+
+                    <div class="upload-input-container">
+                        <input type="file" name="file" id="file">
+
+                        <div class="checkbox-container">
+                            <label for="downsample">
+                                <input type="checkbox" name="downsample" id="downsample" title="ポイント クラウド データのサイズを縮小します。&#10;最大 3,000 万ポイントまでのみ考慮します。"> PCDのサイズを小さくする
+                            </label>
+                        </div>
+
+                        <div class="radio-container">
+                            <h5>*セグメンテーション方法を選択する</h5>
+                            <label for="option1">
+                                <input type="radio" name="option" id="option1" value="option1"> RANSAC
+                            </label>
+                            <label for="option2">
+                                <input type="radio" name="option" id="option2" value="option2" checked> RANSAC+NORMAL
+                            </label>
+                            <label for="option3">
+                                <input type="radio" name="option" id="option3" value="option3"> RANSAC+NORMAL+TORCH
+                            </label>
+                        </div>
+
+                        <input type="submit" value="アップロード">
+
+                        <p class="text-center leading-relaxed">
+                            <b>Supported 3D files</b><br>
+                            .ply, .xyz, .txt<br>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <div class="form-container">
+            <form action="/visualizePCD" method="post">
+                <h4>2.色のセグメントを選択</h4>
+                <div class="visualization-options">
+                    <table>
+                        <tr>
+                            <td><input type="checkbox" id="selectAll" onchange="toggleAllCheckboxes()"></td>
+                            <td>Select All</td>
+                        </tr>
+            
+                        {% for i in range(options|length) %}
+                            {% if i % 2 == 0 %}
+                                </tr><tr>
+                            {% endif %}
+                            <td><input type="checkbox" name="selected_option" value="{{ options[i] }}"></td>
+                            <td>{{ options[i] }}</td>
+                        {% endfor %}
+                        </tr>
+                    </table>
+                    <br>
+                </div>
+
+                <button type="submit">ビジュアライズ</button>
+            </form>
+        </div>
+
+        <div class="container-excel">
+            <form action="{{ url_for('export_excel') }}" method="GET">
+                <h4>3.Excelファイルをダウンロード</h4>
+                <h5>*各色セグメントの面積を計算する</h5>
+                <button type="submit">ダウンロード</button>
+            </form>
+        </div>
+
+    </div>
+
+    
+
+    <div class='mb-4'>
+        <h4>Point Cloud Segmentation </h4>
+            
+        {% if point_cloud_data %} 
+        <div class="downloadpcd" title="1. ファイル形式を選択す。&#10;2. 以下の可視化ポイントクラウドをダウンロードしてください &#10;*以下のポイント クラウドは視覚化のみを目的としています。元のポイント クラウドを視覚化したい場合は、&#10;ダウンロードして別の Web アプリケーションで視覚化してください。">
+            <form action="{{ url_for('download_point_cloud') }}" method="GET">
+                <div class="radio-container1">
+                    <label for="txt">
+                        <input type="radio" name="file_format" id="txt" value="txt">TXT
+                    </label>
+                    <label for="ply">
+                        <input type="radio" name="file_format" id="ply" value="ply" checked>PLY
+                    </label>
+                </div>
+            
+                <button class="btn"><i class="fa fa-download"></i>ダウンロード</button>
+            </form>
+        </div>
+        {% endif %}
+        
+        <div class="wordCloud" loaded="true" style="width: 100%; height: 40vw;">
+        </div>
+    
+        <div id="container"></div>
+    </div>
+
+    <script>
+    
+        function toggleAllCheckboxes() {
+            // Get the "Select All" checkbox
+            var selectAllCheckbox = document.getElementById("selectAll");
+    
+            // Get all checkboxes with the name "selected_colors"
+            var checkboxes = document.querySelectorAll('input[name="selected_option"]');
+    
+            // Set the state of all checkboxes based on the "Select All" checkbox
+            checkboxes.forEach(function(checkbox) {
+                checkbox.checked = selectAllCheckbox.checked;
+            });
+        }
+    </script>
+
+    </body>
+
+    <script>
+
+        const navContainer = document.querySelector('.header-nav-container');
+        const nav = document.querySelector('.header-nav');
+        const leftArrow = document.querySelector('.arrow.left');
+        const rightArrow = document.querySelector('.arrow.right');
+
+        let scrollLeft = 0;  // Track current scroll position
+
+        const scrollNav = (direction) => {
+        const scrollAmount = nav.scrollWidth / 3;  // Scroll by a portion of the width
+
+        if (direction === 'left') {
+            scrollLeft -= scrollAmount;
+            if (scrollLeft < 0) {
+            scrollLeft = 0;  // Prevent scrolling beyond left edge
+            leftArrow.classList.add('disabled');  // Disable left arrow if at left end
+            } else {
+            rightArrow.classList.remove('disabled');  // Enable right arrow if scrolled
+            }
+        } else {
+            scrollLeft += scrollAmount;
+            if (scrollLeft + nav.clientWidth >= nav.scrollWidth) {
+            scrollLeft = nav.scrollWidth - nav.clientWidth;  // Prevent scrolling beyond right edge
+            rightArrow.classList.add('disabled');  // Disable right arrow if at right end
+            } else {
+            leftArrow.classList.remove('disabled');  // Enable left arrow if scrolled
+            }
+        }
+        nav.scrollLeft = scrollLeft;  // Update scroll position
+        };
+
+        leftArrow.addEventListener('click', () => scrollNav('left'));
+        rightArrow.addEventListener('click', () => scrollNav('right'));
+
+
+
+
+        // Visualize the point cloud data
+
+        const container = document.getElementById('container');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setClearColor(0xffffff);
+        container.appendChild(renderer.domElement);
+
+        const pointCloudData = {{ point_cloud_data | safe }};
+        const positions = [];
+        const colors = [];
+
+        pointCloudData.forEach(point => {
+            positions.push(point[0], point[1], point[2]);
+            colors.push(point[3], point[4], point[5]);
+        });
+
+        const geometry = new THREE.BufferGeometry();
+        geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+        geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+
+        // Create a PointsMaterial with circle shape and controllable size
+        const material = new THREE.PointsMaterial({ 
+            vertexColors: true, 
+            size: 0.005,  // Control the size of the points
+            sizeAttenuation: true,
+            map: createCircleTexture(),
+            alphaTest: 0.5,
+            transparent: true 
+        });
+
+        const points = new THREE.Points(geometry, material);
+        scene.add(points);
+
+        camera.position.z = 5;
+
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        function createCircleTexture() {
+            const size = 128;
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+            const center = size / 2;
+            const radius = size / 2;
+
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            ctx.arc(center, center, radius, 0, 2 * Math.PI);
+            ctx.fill();
+
+            const texture = new THREE.Texture(canvas);
+            texture.needsUpdate = true;
+            return texture;
+        }
+
+        // Handle window resize
+        window.addEventListener('resize', onWindowResize, false);
+
+        function onWindowResize() {
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+
+            renderer.setSize(width, height);
+        }
+
+
+    </script>
+
+</div>
+
+
+
+
+
+  <!-- <footer class="footer container-fluid">
+  <small class="copyright">© 2007-2024 User Local,Inc. All Rights Reserved.</small>
+  </footer> -->
+
+    
+</html>

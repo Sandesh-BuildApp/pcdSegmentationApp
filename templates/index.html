@@ -1,1 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Welcome, {{ current_user.username }}</h1>
+    <ul>
+        <li class='header-nav-item'>
+            <a class="header-nav-link" href="/ai_app1">AI App 1</a>
+        </li>
+        <li class='header-nav-item'>
+            <a class="header-nav-link" href="/ai_app2">AI App 2</a>
+        </li>
+    </ul>
+    <!-- <a href="{{ url_for('login') }}">Logout</a> -->
+    <a href="/">Logout</a>
+</body>
+</html>
+
+
+
+<!-- from the keyManage html file -->
+
+<div class="main-contents">
+    <main class='main'>
+      <!-- <div id="app" class='container-fluid' v-cloak> -->
+
+      <!-- <div class='mb-3'>
+        <form class="searchField" action="/minings/sample_46674184" accept-charset="UTF-8" method="get">
+          <div class='input-group'>
+            <input name="search" placeholder="キーワードを入力" class="from-control searchField-query" type="text" id="mining_search_query" />
+            <div class='input-group-append'>
+              <button name="" type="submit" class="btn btn-primary">で絞り込み</button>
+            </div>
+          </div>
+        </form>  
+      </div> -->
+
+      <card class='mb-4'>
+        <h5 id='word_cloud'>Key Management Tree Diagram 
+          <!-- <span class="help-icon" data-toggle="popover" data-placement="right" data-content="出現ボリュームが高い単語ほど、文字サイズを大きく図示しています。" data-html="true">
+            <i class="fas fa-question-circle"></i>
+          </span> -->
+          {% if selected_file %}
+            <div class="download-button">  
+                <a href="{{ selected_file }}" download title="1. 10分経過すると、ファイルをダウンロードできなくなります。&#10;2. すべての色の変更が完了したらすぐにこのファイルをダウンロードしてください">
+                    <!-- <img src="{{ url_for('static', filename='download.gif') }}" alt="Download HTML" > -->
+                    <button class="btn"><i class="fa fa-download"></i> Download</button>
+                </a>
+            </div>
+            {% endif %}
+        </h5>
+        <!-- <iframe src="{{ url_for('static', filename='tree_graph_1FL.html') }}" title="description" class="wordCloud" loaded="true" style="width: 100%; height: 621px;"></iframe> -->
+        <div class="wordCloud" loaded="true" style="width: 100%; height: 40vw;">
+            {{ html_content | safe }}
+        </div>
+      </card>
+  
+
+      <!-- <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            setupResultView();
+        })
+      </script> -->
+    </main>
+  </div>
+
+    <!-- {% if selected_file %}
+    <div class="download-button">  
+        <a href="{{ selected_file }}" download title="1. 10分経過すると、ファイルをダウンロードできなくなります。&#10;2. すべての色の変更が完了したらすぐにこのファイルをダウンロードしてください">
+            <img src="{{ url_for('static', filename='download.gif') }}" alt="Download HTML" >
+            <button class="btn"><i class="fa fa-download"></i> Download</button>
+        </a>
+    </div>
+    {% endif %} -->
+
 

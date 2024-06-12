@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='login.css') }}"
+    />
+  </head>
+
+
+  <body>
+    <div> 
+      <img src="static/nohara_logo.png", class= 'clsFirstImg'> 
+    </div>
+      
+    <div class="firstHalf">
+      <h2>Please Register Here</h2>
+
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <div class="flash-messages">
+            {% for message in messages %}
+              <div class="flash-message">{{ message }}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+
+      <form method="post">
+        <label for="username"></label>
+        <input type="text" name="username" placeholder="Enter username" required >
+        <label for="email"></label>
+        <input type="text" name="email" placeholder="Enter Email" required >
+        <label for="password"></label>
+        <input type="password" name="password" placeholder="Enter Password" required >
+
+        <div></div>
+
+        <button type="submit">Register</button>
+
+        
+
+        
+      </form>
+
+      <a href="/" class="logi">Already have an account ? Login </a>
+      
+    </div>
+    
+  </body>
+
+
+
+
+
+
+
+  <!-- <body>
+    <div class="container">
+      <div class="secondHalf">
+        <h1>You're welcome!!!</h1>
+      </div>
+      <div class="firstHalf">
+        <h2>Register here</h2>
+
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="flash-messages">
+              {% for message in messages %}
+                <div class="flash-message">{{ message }}</div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <form method="post">
+          <label for="username">Username:</label>
+          <input type="text" name="username" required />
+          <label for="email">Email:</label>
+          <input type="text" name="email" required />
+          <label for="password">Password:</label>
+          <input type="password" name="password" required />
+          <button type="submit">Register</button>
+        </form>
+        <a href="/">Already have an account ? Login </a>
+      </div>
+    </div>
+  </body> -->
+
+
+</html>
